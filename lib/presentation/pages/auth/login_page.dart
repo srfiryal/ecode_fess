@@ -6,6 +6,12 @@ import 'package:ecode_fess/presentation/widgets/custom_button.dart';
 import 'package:ecode_fess/presentation/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+
+import '../../../application/repositories/auth/auth_repository.dart';
+import '../../../common/constants.dart';
+import '../../../common/shared_code.dart';
+import '../../../injection_container.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,8 +22,27 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
+  final AuthRepository _repository = getIt<AuthRepository>();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _login() async {
+    if (_formKey.currentState?.validate() ?? true) {
+      context.loaderOverlay.show();
+      try {
+        String username = _usernameController.text;
+        String password = _passwordController.text;
+
+        await _repository.login(username, password);
+
+        AutoRouter.of(context).replace(const HomeRoute());
+      } catch (e, trace) {
+        Constants.logger.e(e.toString(), stackTrace: trace);
+        SharedCode.showSnackBar(type: Constants.snackBarDanger, context: context, message: e.toString());
+      }
+      context.loaderOverlay.hide();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +92,10 @@ class _LoginPageState extends State<LoginPage> {
       child: Column(
         children: [
           CustomTextField(
-            controller: _emailController,
+            controller: _usernameController,
             label: AppLocalizations.of(context).email,
             hint: AppLocalizations.of(context).emailHint,
+            validator: SharedCode(context).emptyValidators,
             icon: Iconsax.sms5,
           ),
           const SizedBox(height: UiConstants.mdSpacing),
@@ -77,15 +103,14 @@ class _LoginPageState extends State<LoginPage> {
             controller: _passwordController,
             label: AppLocalizations.of(context).password,
             hint: AppLocalizations.of(context).passwordHint,
+            validator: SharedCode(context).passwordValidators,
             icon: Iconsax.key5,
             isPassword: true,
           ),
           const SizedBox(height: UiConstants.xlSpacing),
           CustomButton(
             buttonText: AppLocalizations.of(context).login,
-            onPressed: () {
-              AutoRouter.of(context).replace(const HomeRoute());
-            },
+            onPressed: _login,
           )
         ],
       ),

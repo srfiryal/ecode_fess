@@ -14,6 +14,9 @@ class ColorValues {
   static const danger50 = Color(0xFFEA3829);
   static const danger30 = Color(0xFFF2887F);
   static const danger10 = Color(0xFFFBD7D4);
+  static const warning50 = Color(0xFFF68524);
+  static const warning30 = Color(0xFFFAB67C);
+  static const warning10 = Color(0xFFFDE7D3);
   static const success50 = Color(0xFF0BAC74);
   static const success30 = Color(0xFF6CCDAB);
   static const success10 = Color(0xFFCEEEE3);

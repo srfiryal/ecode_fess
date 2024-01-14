@@ -2,6 +2,7 @@ class UiConstants {
   static const double lgPadding = 24;
   static const double mdPadding = 16;
   static const double smPadding = 12;
+  static const double xsPadding = 8;
   static const double xlSpacing = 24;
   static const double lgSpacing = 20;
   static const double mdSpacing = 16;

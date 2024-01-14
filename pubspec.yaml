@@ -28,6 +28,9 @@ dependencies:
   equatable: ^2.0.5
   file_picker: ^6.1.1
   iconsax: ^0.0.8
+  logger: ^2.0.2+1
+  shared_preferences: ^2.2.2
+  get_it: ^7.6.6
 
 dev_dependencies:
   flutter_test:
