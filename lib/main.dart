@@ -50,6 +50,9 @@ class _MyAppState extends State<MyApp> {
                 RepositoryProvider(
                   create: (context) => getIt<AuthRepository>(),
                 ),
+                RepositoryProvider(
+                  create: (context) => getIt<MenfessRepository>(),
+                ),
               ],
               child: MaterialApp.router(
                 title: 'E-Code Fess',

@@ -9,7 +9,7 @@ class MenfessModel with _$MenfessModel {
     required int id,
     required int userId,
     required String? body,
-    required int? reactions,
+    @Default(0) int reactions,
   }) = _MenfessModel;
 
   factory MenfessModel.fromJson(Map<String, Object?> json)

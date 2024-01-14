@@ -11,7 +11,7 @@ _$MenfessModelImpl _$$MenfessModelImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       userId: json['userId'] as int,
       body: json['body'] as String?,
-      reactions: json['reactions'] as int?,
+      reactions: json['reactions'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$$MenfessModelImplToJson(_$MenfessModelImpl instance) =>

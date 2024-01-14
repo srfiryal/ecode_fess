@@ -19,6 +19,7 @@ class AuthRepository extends BaseAuthRepository {
     if (res.statusCode == 200) {
       UserModel userModel = UserModel.fromJson(jsonDecode(res.body));
       await SharedPreferencesService.setToken(userModel.token);
+      await SharedPreferencesService.setUserId(userModel.id);
       SharedData.userData.value = userModel;
     } else {
       throw jsonDecode(res.body)['message'];

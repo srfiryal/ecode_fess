@@ -10,6 +10,7 @@ class Constants {
   static const String delete = 'delete';
 
   static const String prefToken = 'token';
+  static const String prefUserId = 'userId';
 
   static const String snackBarSuccess = 'success';
   static const String snackBarWarning = 'warning';

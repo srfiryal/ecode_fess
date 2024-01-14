@@ -9,10 +9,10 @@ import 'custom_text_field.dart';
 
 class CustomUploadForm extends StatefulWidget {
   final TextEditingController controller;
-  final bool isReply;
+  final bool isComment;
   final VoidCallback onUpload;
 
-  const CustomUploadForm({super.key, this.isReply = false, required this.onUpload, required this.controller});
+  const CustomUploadForm({super.key, this.isComment = false, required this.onUpload, required this.controller});
 
   @override
   State<CustomUploadForm> createState() => _CustomUploadFormState();
@@ -55,7 +55,7 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
           const SizedBox(height: UiConstants.smSpacing),
           CustomTextField(
             controller: widget.controller,
-            hint: widget.isReply ? AppLocalizations.of(context).replyHint : AppLocalizations.of(context).menfessHint,
+            hint: widget.isComment ? AppLocalizations.of(context).replyHint : AppLocalizations.of(context).menfessHint,
             hasBorder: false,
             textInputType: TextInputType.multiline,
             maxLines: 3,

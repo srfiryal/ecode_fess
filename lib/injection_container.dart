@@ -6,5 +6,6 @@ final getIt = GetIt.instance;
 
 void init() {
   getIt.registerLazySingleton(() => AuthRepository());
+  getIt.registerLazySingleton(() => MenfessRepository());
 }
 

@@ -23,7 +23,7 @@ mixin _$MenfessModel {
   int get id => throw _privateConstructorUsedError;
   int get userId => throw _privateConstructorUsedError;
   String? get body => throw _privateConstructorUsedError;
-  int? get reactions => throw _privateConstructorUsedError;
+  int get reactions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +37,7 @@ abstract class $MenfessModelCopyWith<$Res> {
           MenfessModel value, $Res Function(MenfessModel) then) =
       _$MenfessModelCopyWithImpl<$Res, MenfessModel>;
   @useResult
-  $Res call({int id, int userId, String? body, int? reactions});
+  $Res call({int id, int userId, String? body, int reactions});
 }
 
 /// @nodoc
@@ -56,7 +56,7 @@ class _$MenfessModelCopyWithImpl<$Res, $Val extends MenfessModel>
     Object? id = null,
     Object? userId = null,
     Object? body = freezed,
-    Object? reactions = freezed,
+    Object? reactions = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -71,10 +71,10 @@ class _$MenfessModelCopyWithImpl<$Res, $Val extends MenfessModel>
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
               as String?,
-      reactions: freezed == reactions
+      reactions: null == reactions
           ? _value.reactions
           : reactions // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ) as $Val);
   }
 }
@@ -87,7 +87,7 @@ abstract class _$$MenfessModelImplCopyWith<$Res>
       __$$MenfessModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, int userId, String? body, int? reactions});
+  $Res call({int id, int userId, String? body, int reactions});
 }
 
 /// @nodoc
@@ -104,7 +104,7 @@ class __$$MenfessModelImplCopyWithImpl<$Res>
     Object? id = null,
     Object? userId = null,
     Object? body = freezed,
-    Object? reactions = freezed,
+    Object? reactions = null,
   }) {
     return _then(_$MenfessModelImpl(
       id: null == id
@@ -119,10 +119,10 @@ class __$$MenfessModelImplCopyWithImpl<$Res>
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
               as String?,
-      reactions: freezed == reactions
+      reactions: null == reactions
           ? _value.reactions
           : reactions // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ));
   }
 }
@@ -134,7 +134,7 @@ class _$MenfessModelImpl implements _MenfessModel {
       {required this.id,
       required this.userId,
       required this.body,
-      required this.reactions});
+      this.reactions = 0});
 
   factory _$MenfessModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$MenfessModelImplFromJson(json);
@@ -146,7 +146,8 @@ class _$MenfessModelImpl implements _MenfessModel {
   @override
   final String? body;
   @override
-  final int? reactions;
+  @JsonKey()
+  final int reactions;
 
   @override
   String toString() {
@@ -188,7 +189,7 @@ abstract class _MenfessModel implements MenfessModel {
       {required final int id,
       required final int userId,
       required final String? body,
-      required final int? reactions}) = _$MenfessModelImpl;
+      final int reactions}) = _$MenfessModelImpl;
 
   factory _MenfessModel.fromJson(Map<String, dynamic> json) =
       _$MenfessModelImpl.fromJson;
@@ -200,7 +201,7 @@ abstract class _MenfessModel implements MenfessModel {
   @override
   String? get body;
   @override
-  int? get reactions;
+  int get reactions;
   @override
   @JsonKey(ignore: true)
   _$$MenfessModelImplCopyWith<_$MenfessModelImpl> get copyWith =>

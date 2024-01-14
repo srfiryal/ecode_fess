@@ -20,6 +20,14 @@ class SharedPreferencesService {
     await prefs?.setString(Constants.prefToken, token);
   }
 
+  static int? getUserId() {
+    return prefs?.getInt(Constants.prefUserId);
+  }
+
+  static Future<void> setUserId(int userId) async {
+    await prefs?.setInt(Constants.prefUserId, userId);
+  }
+
   static Future<void> clearAllPrefs() async {
     await prefs?.clear();
   }
