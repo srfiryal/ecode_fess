@@ -12,5 +12,10 @@
   "usernameHint": "Masukkan username",
   "password": "Password",
   "passwordHint": "Masukkan password",
-  "login": "Login"
+  "login": "Login",
+  "menfessHint": "Kirim menfess kamu",
+  "send": "Kirim",
+  "replyHint": "Kirim balasan",
+  "likes": "suka",
+  "anonymous": "Anonim"
 }

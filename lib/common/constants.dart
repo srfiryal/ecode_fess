@@ -9,6 +9,8 @@ class Constants {
   static const String put = 'put';
   static const String delete = 'delete';
 
+  static const String prefToken = 'token';
+
   static const String snackBarSuccess = 'success';
   static const String snackBarWarning = 'warning';
   static const String snackBarDanger = 'danger';

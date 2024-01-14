@@ -8,10 +8,8 @@ class UserModel with _$UserModel {
   const factory UserModel({
     required int id,
     required String username,
-    required String email,
     required String? firstName,
     required String? lastName,
-    required String? gender,
     required String? image,
     required String token,
   }) = _UserModel;

@@ -22,10 +22,8 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 mixin _$UserModel {
   int get id => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
   String? get firstName => throw _privateConstructorUsedError;
   String? get lastName => throw _privateConstructorUsedError;
-  String? get gender => throw _privateConstructorUsedError;
   String? get image => throw _privateConstructorUsedError;
   String get token => throw _privateConstructorUsedError;
 
@@ -43,10 +41,8 @@ abstract class $UserModelCopyWith<$Res> {
   $Res call(
       {int id,
       String username,
-      String email,
       String? firstName,
       String? lastName,
-      String? gender,
       String? image,
       String token});
 }
@@ -66,10 +62,8 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   $Res call({
     Object? id = null,
     Object? username = null,
-    Object? email = null,
     Object? firstName = freezed,
     Object? lastName = freezed,
-    Object? gender = freezed,
     Object? image = freezed,
     Object? token = null,
   }) {
@@ -82,10 +76,6 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
       firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -93,10 +83,6 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
       lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      gender: freezed == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
               as String?,
       image: freezed == image
           ? _value.image
@@ -121,10 +107,8 @@ abstract class _$$UserModelImplCopyWith<$Res>
   $Res call(
       {int id,
       String username,
-      String email,
       String? firstName,
       String? lastName,
-      String? gender,
       String? image,
       String token});
 }
@@ -142,10 +126,8 @@ class __$$UserModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? username = null,
-    Object? email = null,
     Object? firstName = freezed,
     Object? lastName = freezed,
-    Object? gender = freezed,
     Object? image = freezed,
     Object? token = null,
   }) {
@@ -158,10 +140,6 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
       firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -169,10 +147,6 @@ class __$$UserModelImplCopyWithImpl<$Res>
       lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      gender: freezed == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
               as String?,
       image: freezed == image
           ? _value.image
@@ -192,10 +166,8 @@ class _$UserModelImpl implements _UserModel {
   const _$UserModelImpl(
       {required this.id,
       required this.username,
-      required this.email,
       required this.firstName,
       required this.lastName,
-      required this.gender,
       required this.image,
       required this.token});
 
@@ -207,13 +179,9 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String username;
   @override
-  final String email;
-  @override
   final String? firstName;
   @override
   final String? lastName;
-  @override
-  final String? gender;
   @override
   final String? image;
   @override
@@ -221,7 +189,7 @@ class _$UserModelImpl implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, username: $username, email: $email, firstName: $firstName, lastName: $lastName, gender: $gender, image: $image, token: $token)';
+    return 'UserModel(id: $id, username: $username, firstName: $firstName, lastName: $lastName, image: $image, token: $token)';
   }
 
   @override
@@ -232,20 +200,18 @@ class _$UserModelImpl implements _UserModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.username, username) ||
                 other.username == username) &&
-            (identical(other.email, email) || other.email == email) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
-            (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.image, image) || other.image == image) &&
             (identical(other.token, token) || other.token == token));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, username, email, firstName,
-      lastName, gender, image, token);
+  int get hashCode =>
+      Object.hash(runtimeType, id, username, firstName, lastName, image, token);
 
   @JsonKey(ignore: true)
   @override
@@ -265,10 +231,8 @@ abstract class _UserModel implements UserModel {
   const factory _UserModel(
       {required final int id,
       required final String username,
-      required final String email,
       required final String? firstName,
       required final String? lastName,
-      required final String? gender,
       required final String? image,
       required final String token}) = _$UserModelImpl;
 
@@ -280,13 +244,9 @@ abstract class _UserModel implements UserModel {
   @override
   String get username;
   @override
-  String get email;
-  @override
   String? get firstName;
   @override
   String? get lastName;
-  @override
-  String? get gender;
   @override
   String? get image;
   @override

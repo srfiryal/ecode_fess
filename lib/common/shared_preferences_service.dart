@@ -1,3 +1,4 @@
+import 'package:ecode_fess/common/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesService {
@@ -12,11 +13,11 @@ class SharedPreferencesService {
   }
 
   static String? getToken() {
-    return prefs?.getString('token');
+    return prefs?.getString(Constants.prefToken);
   }
 
   static Future<void> setToken(String token) async {
-    await prefs?.setString('token', token);
+    await prefs?.setString(Constants.prefToken, token);
   }
 
   static Future<void> clearAllPrefs() async {

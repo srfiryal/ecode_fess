@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:ecode_fess/application/repositories/auth/base_auth_repository.dart';
 import 'package:ecode_fess/data/models/user/user_model.dart';
+import 'package:ecode_fess/presentation/core/shared_data.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/network_util.dart';
@@ -18,6 +19,7 @@ class AuthRepository extends BaseAuthRepository {
     if (res.statusCode == 200) {
       UserModel userModel = UserModel.fromJson(jsonDecode(res.body));
       await SharedPreferencesService.setToken(userModel.token);
+      SharedData.userData.value = userModel;
     } else {
       throw jsonDecode(res.body)['message'];
     }

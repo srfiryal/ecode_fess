@@ -25,9 +25,10 @@ class AppThemeData {
     return ThemeData(
         primaryColor: primaryColor,
         primarySwatch: primaryMaterialColor,
-        scaffoldBackgroundColor: ColorValues.background,
-        canvasColor: ColorValues.background,
+        scaffoldBackgroundColor: ColorValues.surface,
+        canvasColor: ColorValues.surface,
         brightness: Brightness.light,
+        iconTheme: const IconThemeData(color: ColorValues.grey50),
         textTheme: TextTheme(
           titleLarge: GoogleFonts.sora(
               color: ColorValues.text90, fontSize: 18, fontWeight: FontWeight.w700),

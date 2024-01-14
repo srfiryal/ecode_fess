@@ -9,12 +9,10 @@ class CustomButton extends StatefulWidget {
       this.onPressed,
       required this.buttonText,
       this.backgroundColor = ColorValues.primary50,
-      this.borderRadius = UiConstants.mdRadius,
       this.isSmall = false})
       : super(key: key);
   final Function()? onPressed;
   final String buttonText;
-  final double borderRadius;
   final Color backgroundColor;
   final bool isSmall;
 
@@ -28,11 +26,12 @@ class _CustomButtonState extends State<CustomButton> {
     return ElevatedButton(
         onPressed: widget.onPressed,
         style: ElevatedButton.styleFrom(
-            minimumSize: const Size(double.infinity, 48),
+            minimumSize: widget.isSmall ? const Size(0, 32) :  const Size(double.infinity, 48),
             elevation: 0,
+            padding: widget.isSmall ? const EdgeInsets.symmetric(vertical: 7, horizontal: 12) : null,
             backgroundColor: widget.backgroundColor,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(widget.borderRadius),
+                borderRadius: BorderRadius.circular(widget.isSmall ? UiConstants.smRadius : UiConstants.mdRadius),
                 side: BorderSide(
                     color: widget.onPressed == null ? Colors.transparent : widget.backgroundColor,
                     width: 1))),
