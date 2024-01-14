@@ -40,6 +40,15 @@ class AppRouter extends _i2.RootStackRouter {
         barrierDismissible: false,
       );
     },
+    HomeRoute.name: (routeData) {
+      return _i2.CustomPage<dynamic>(
+        routeData: routeData,
+        child: const _i1.HomePage(),
+        transitionsBuilder: _i2.TransitionsBuilders.fadeIn,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
   };
 
   @override
@@ -57,6 +66,10 @@ class AppRouter extends _i2.RootStackRouter {
         _i2.RouteConfig(
           LoginRoute.name,
           path: '/login',
+        ),
+        _i2.RouteConfig(
+          HomeRoute.name,
+          path: '/home',
         ),
       ];
 }
@@ -83,4 +96,16 @@ class LoginRoute extends _i2.PageRouteInfo<void> {
         );
 
   static const String name = 'LoginRoute';
+}
+
+/// generated route for
+/// [_i1.HomePage]
+class HomeRoute extends _i2.PageRouteInfo<void> {
+  const HomeRoute()
+      : super(
+          HomeRoute.name,
+          path: '/home',
+        );
+
+  static const String name = 'HomeRoute';
 }

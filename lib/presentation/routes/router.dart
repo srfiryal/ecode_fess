@@ -25,6 +25,10 @@ import '../pages/screens.dart';
         page: LoginPage,
         path: '/login',
         transitionsBuilder: TransitionsBuilders.fadeIn),
+    CustomRoute(
+        page: HomePage,
+        path: '/home',
+        transitionsBuilder: TransitionsBuilders.fadeIn),
   ],
 )
 class $AppRouter {}

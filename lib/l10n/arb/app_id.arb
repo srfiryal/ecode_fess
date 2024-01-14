@@ -1,3 +1,11 @@
 {
-  "eCodeFess": "E-Code Fess"
+  "eCodeFess": "E-Code Fess",
+  "optional": "Opsional",
+  "loginTitle": "Yuk, login dulu.",
+  "loginDesc": "Masukkan akun yang udah kamu daftarin!",
+  "email": "Email",
+  "emailHint": "Masukkan email",
+  "password": "Password",
+  "passwordHint": "Masukkan password",
+  "login": "Login"
 }
