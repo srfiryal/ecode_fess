@@ -8,8 +8,8 @@
   "optional": "Opsional",
   "loginTitle": "Yuk, login dulu.",
   "loginDesc": "Masukkan akun yang udah kamu daftarin!",
-  "email": "Email",
-  "emailHint": "Masukkan email",
+  "username": "Username",
+  "usernameHint": "Masukkan username",
   "password": "Password",
   "passwordHint": "Masukkan password",
   "login": "Login"

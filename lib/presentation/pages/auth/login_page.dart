@@ -93,10 +93,10 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           CustomTextField(
             controller: _usernameController,
-            label: AppLocalizations.of(context).email,
-            hint: AppLocalizations.of(context).emailHint,
+            label: AppLocalizations.of(context).username,
+            hint: AppLocalizations.of(context).usernameHint,
             validator: SharedCode(context).emptyValidators,
-            icon: Iconsax.sms5,
+            icon: Iconsax.profile_tick5,
           ),
           const SizedBox(height: UiConstants.mdSpacing),
           CustomTextField(
