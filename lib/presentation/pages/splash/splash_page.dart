@@ -5,6 +5,8 @@ import 'package:ecode_fess/presentation/routes/router.gr.dart';
 import 'package:ecode_fess/presentation/widgets/custom_title.dart';
 import 'package:flutter/material.dart';
 
+import '../../../common/shared_preferences_service.dart';
+
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -15,11 +17,16 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 3), () {
-      AutoRouter.of(context).replace(const LoginRoute());
-    });
+    _checkAuth();
 
     super.initState();
+  }
+
+  Future<void> _checkAuth() async {
+    await Future.delayed(const Duration(seconds: 3));
+    AutoRouter.of(context).replace(SharedPreferencesService.getToken() == null
+        ? const LoginRoute()
+        : const HomeRoute());
   }
 
   @override
