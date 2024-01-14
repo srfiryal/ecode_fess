@@ -1,0 +1,16 @@
+{
+  "eCodeFess": "E-Code Fess",
+  "yes": "Ya",
+  "cancel": "Batal",
+  "emptyValidator": "Tidak boleh kosong",
+  "emailValidator": "Email tidak valid",
+  "passwordValidator": "Kurang lebih harus ada 8 karakter",
+  "optional": "Opsional",
+  "loginTitle": "Yuk, login dulu.",
+  "loginDesc": "Masukkan akun yang udah kamu daftarin!",
+  "username": "Username",
+  "usernameHint": "Masukkan username",
+  "password": "Password",
+  "passwordHint": "Masukkan password",
+  "login": "Login"
+}
