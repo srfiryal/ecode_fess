@@ -18,8 +18,7 @@ class AuthRepository extends BaseAuthRepository {
 
     if (res.statusCode == 200) {
       UserModel userModel = UserModel.fromJson(jsonDecode(res.body));
-      await SharedPreferencesService.setToken(userModel.token);
-      await SharedPreferencesService.setUserId(userModel.id);
+      await SharedPreferencesService.setToken(userModel.token!);
       SharedData.userData.value = userModel;
     } else {
       throw jsonDecode(res.body)['message'];
@@ -29,5 +28,18 @@ class AuthRepository extends BaseAuthRepository {
   @override
   Future<void> logout() async {
     await SharedPreferencesService.clearAllPrefs();
+  }
+
+  @override
+  Future<void> getUserData() async {
+    var res = await NetworkUtil.get(Uri.parse('${Constants.baseUrl}/auth/me'));
+
+    if (res.statusCode == 200) {
+      UserModel userModel = UserModel.fromJson(jsonDecode(res.body));
+      SharedData.userData.value = userModel;
+      Constants.logger.i('user data updated ${SharedData.userData.value}');
+    } else {
+      throw jsonDecode(res.body)['message'];
+    }
   }
 }

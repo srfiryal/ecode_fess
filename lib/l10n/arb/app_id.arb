@@ -17,5 +17,10 @@
   "send": "Kirim",
   "replyHint": "Kirim balasan",
   "likes": "suka",
-  "anonymous": "Anonim"
+  "anonymous": "Anonim",
+  "sendFess": "Kirim Fess",
+  "updateFess": "Ubah Fess",
+  "fessSent": "Fess telah terkirim",
+  "fessEmpty": "Fess tidak boleh kosong",
+  "internetDisconnected": "Internet-mu terputus!"
 }

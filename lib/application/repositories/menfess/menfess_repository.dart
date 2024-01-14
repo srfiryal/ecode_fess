@@ -5,6 +5,7 @@ import 'package:ecode_fess/data/models/menfess/menfess_model.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/network_util.dart';
+import '../../../presentation/core/shared_data.dart';
 
 class MenfessRepository extends BaseMenfessRepository {
   @override
@@ -34,6 +35,18 @@ class MenfessRepository extends BaseMenfessRepository {
       }
       return comments;
     } else {
+      throw jsonDecode(res.body)['message'];
+    }
+  }
+
+  @override
+  Future<void> addMenfess({required String body}) async {
+    var res = await NetworkUtil.post(Uri.parse('${Constants.baseUrl}/posts/add'), body: {
+      'body': body,
+      'userId': SharedData.userData.value!.id
+    });
+
+    if (res.statusCode != 200) {
       throw jsonDecode(res.body)['message'];
     }
   }

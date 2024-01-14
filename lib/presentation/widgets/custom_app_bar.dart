@@ -83,7 +83,7 @@ class _CustomAppbarState extends State<CustomAppBar> {
               ),
             ),
           ),
-          if (widget.isHome) const SizedBox(width: UiConstants.xsSpacing),
+          SizedBox(width: widget.isHome ? UiConstants.xsSpacing : UiConstants.xsSpacing),
           GestureDetector(
             onTap: () {},
             child: ValueListenableBuilder(

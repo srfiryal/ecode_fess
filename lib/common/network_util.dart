@@ -43,7 +43,7 @@ class NetworkUtil {
         res = await http.post(url, body: body, headers: headers, encoding: encoding);
     }
 
-    Constants.logger.i('response test $url ${res.statusCode} ${res.body}');
+    Constants.logger.i('response test $url $res');
 
     return res;
   }

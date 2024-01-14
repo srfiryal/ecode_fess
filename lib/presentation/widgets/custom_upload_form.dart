@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:ecode_fess/l10n/l10n.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../common/shared_code.dart';
 import 'custom_text_field.dart';
 
 class CustomUploadForm extends StatefulWidget {
@@ -57,6 +58,7 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
             controller: widget.controller,
             hint: widget.isComment ? AppLocalizations.of(context).replyHint : AppLocalizations.of(context).menfessHint,
             hasBorder: false,
+            validator: SharedCode(context).emptyValidators,
             textInputType: TextInputType.multiline,
             maxLines: 3,
           ),

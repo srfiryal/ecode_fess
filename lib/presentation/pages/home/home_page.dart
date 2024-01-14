@@ -1,8 +1,11 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:ecode_fess/application/blocs/auth/auth_bloc.dart';
 import 'package:ecode_fess/application/blocs/menfess/menfess_bloc.dart';
 import 'package:ecode_fess/common/constants.dart';
 import 'package:ecode_fess/data/models/menfess/menfess_model.dart';
 import 'package:ecode_fess/l10n/l10n.dart';
 import 'package:ecode_fess/presentation/core/color_values.dart';
+import 'package:ecode_fess/presentation/core/shared_data.dart';
 import 'package:ecode_fess/presentation/widgets/custom_app_bar.dart';
 import 'package:ecode_fess/presentation/widgets/custom_menfess.dart';
 import 'package:ecode_fess/presentation/widgets/custom_upload_form.dart';
@@ -10,10 +13,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../application/repositories/menfess/menfess_repository.dart';
 import '../../../common/shared_code.dart';
+import '../../../injection_container.dart';
 import '../../core/ui_constants.dart';
+import '../../routes/router.gr.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,9 +30,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _uploadController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final _bloc = MenfessBloc();
+  final AuthBloc _authBloc = AuthBloc();
+  final MenfessBloc _menfessBloc = MenfessBloc();
+  final MenfessRepository _menfessRepository = getIt<MenfessRepository>();
   List<MenfessModel>? _list;
 
   @override
@@ -33,22 +43,47 @@ class _HomePageState extends State<HomePage> {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _refreshPage();
     });
+
+    _authBloc.add(const GetUserDataEvent());
+
     super.initState();
+  }
+
+  Future<void> _sendFess() async {
+    if (_formKey.currentState?.validate() ?? true) {
+      context.loaderOverlay.show();
+      try {
+        String body = _uploadController.text;
+
+        await _menfessRepository.addMenfess(body: body);
+
+        SharedCode.showSnackBar(type: Constants.snackBarSuccess, context: context, message: AppLocalizations.of(context).fessSent);
+        AutoRouter.of(context).pop();
+      } catch (e, trace) {
+        Constants.logger.e(e.toString(), stackTrace: trace);
+        SharedCode.showSnackBar(type: Constants.snackBarDanger, context: context, message: e.toString());
+      }
+      context.loaderOverlay.hide();
+    } else {
+      SharedCode.showSnackBar(type: Constants.snackBarWarning, context: context, message: AppLocalizations.of(context).fessEmpty);
+    }
   }
 
   Future<void> _refreshPage() async {
     _list = null;
-    _bloc.skip = 0;
-    _bloc.needsFetching = false;
-    _bloc.isFetching = false;
-    _bloc.add(const GetMenfessesEvent());
+    _menfessBloc.skip = 0;
+    _menfessBloc.needsFetching = false;
+    _menfessBloc.isFetching = false;
+    _menfessBloc.add(const GetMenfessesEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          AutoRouter.of(context).push(FessFormRoute());
+        },
         backgroundColor: ColorValues.primary30,
         elevation: 1,
         child: const Icon(Iconsax.message_edit5, color: ColorValues.white),
@@ -56,10 +91,24 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Column(
           children: [
-            CustomAppBar(
-              title: AppLocalizations.of(context).eCodeFess,
-              isHome: true,
-              onSearchTap: () {},
+            BlocBuilder(
+              bloc: _authBloc,
+              builder: (context, state) {
+                if (state is AuthError) {
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
+                    SharedCode.showSnackBar(type: Constants.snackBarDanger, context: context, message: state.error);
+                  });
+                }
+
+                return Skeletonizer(
+                  enabled: SharedData.userData.value == null,
+                  child: CustomAppBar(
+                    title: AppLocalizations.of(context).eCodeFess,
+                    isHome: true,
+                    onSearchTap: () {},
+                  ),
+                );
+              },
             ),
             Expanded(
               child: RefreshIndicator(
@@ -72,19 +121,22 @@ class _HomePageState extends State<HomePage> {
                         ..addListener(() async {
                           if (_scrollController.offset ==
                               _scrollController.position.maxScrollExtent &&
-                              !_bloc.isFetching &&
-                              _bloc.needsFetching) {
-                            _bloc.skip += 10;
-                            _bloc.add(GetMenfessesEvent(skip: _bloc.skip += 10));
+                              !_menfessBloc.isFetching &&
+                              _menfessBloc.needsFetching) {
+                            _menfessBloc.skip += 10;
+                            _menfessBloc.add(GetMenfessesEvent(skip: _menfessBloc.skip += 10));
                           }
                         }),
                       physics: const AlwaysScrollableScrollPhysics(),
                       padding: const EdgeInsets.symmetric(vertical: UiConstants.smPadding),
                       child: Column(
                         children: [
-                          CustomUploadForm(
-                            controller: _uploadController,
-                            onUpload: () {},
+                          Form(
+                            key: _formKey,
+                            child: CustomUploadForm(
+                              controller: _uploadController,
+                              onUpload: _sendFess,
+                            ),
                           ),
                           const SizedBox(height: UiConstants.smSpacing),
                           _buildMenfessList(),
@@ -103,10 +155,10 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildMenfessList() {
     return BlocBuilder<MenfessBloc, MenfessState>(
-      bloc: _bloc,
+      bloc: _menfessBloc,
       builder: (context, state) {
         if (state is GetMenfessesLoaded) {
-          if (_bloc.skip == 0) {
+          if (_menfessBloc.skip == 0) {
             _list = state.list;
           } else {
             _list?.addAll(state.list);
@@ -134,7 +186,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            if (_bloc.isFetching) const SizedBox(height: 10, child: LinearProgressIndicator(color: ColorValues.primary30)),
+            if (_menfessBloc.isFetching) const SizedBox(height: 10, child: LinearProgressIndicator(color: ColorValues.primary30)),
           ],
         );
       },
