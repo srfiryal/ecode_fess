@@ -21,6 +21,7 @@
   "sendFess": "Kirim Fess",
   "updateFess": "Ubah Fess",
   "fessSent": "Fess telah terkirim",
+  "commentSent": "Balasan telah terkirim",
   "fessDeleted": "Fess telah dihapus",
   "fessEmpty": "Fess tidak boleh kosong",
   "internetDisconnected": "Internet-mu terputus!",

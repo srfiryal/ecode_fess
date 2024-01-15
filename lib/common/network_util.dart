@@ -25,6 +25,7 @@ class NetworkUtil {
     headers ??= {};
     if (token != null) {
       headers['Authorization'] = 'Bearer $token';
+      headers['Content-Type'] = 'application/json';
     }
     Constants.logger.i('body $body $headers');
 

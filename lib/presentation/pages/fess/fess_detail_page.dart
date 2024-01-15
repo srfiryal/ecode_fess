@@ -5,12 +5,15 @@ import 'package:ecode_fess/presentation/widgets/custom_upload_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:sizer/sizer.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../application/blocs/menfess/menfess_bloc.dart';
+import '../../../application/repositories/menfess/menfess_repository.dart';
 import '../../../common/constants.dart';
 import '../../../common/shared_code.dart';
+import '../../../injection_container.dart';
 import '../../../l10n/l10n.dart';
 import '../../core/ui_constants.dart';
 import '../../widgets/custom_app_bar.dart';
@@ -26,6 +29,7 @@ class FessDetailPage extends StatefulWidget {
 
 class _FessDetailPageState extends State<FessDetailPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final MenfessRepository _menfessRepository = getIt<MenfessRepository>();
   final TextEditingController _commentController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final MenfessBloc _menfessBloc = MenfessBloc();
@@ -46,6 +50,25 @@ class _FessDetailPageState extends State<FessDetailPage> {
     _menfessBloc.needsFetching = false;
     _menfessBloc.isFetching = false;
     _menfessBloc.add(GetCommentsEvent(postId: widget.menfessModel.id));
+  }
+
+  Future<void> _sendReply() async {
+    if (_formKey.currentState?.validate() ?? true) {
+      context.loaderOverlay.show();
+      try {
+        String body = _commentController.text;
+
+        await _menfessRepository.addMenfess(body: body);
+
+        SharedCode.showSnackBar(type: Constants.snackBarSuccess, context: context, message: AppLocalizations.of(context).commentSent);
+      } catch (e, trace) {
+        Constants.logger.e(e.toString(), stackTrace: trace);
+        SharedCode.showSnackBar(type: Constants.snackBarDanger, context: context, message: e.toString());
+      }
+    } else {
+      SharedCode.showSnackBar(type: Constants.snackBarWarning, context: context, message: AppLocalizations.of(context).fessEmpty);
+    }
+    context.loaderOverlay.hide();
   }
 
   @override
@@ -83,7 +106,7 @@ class _FessDetailPageState extends State<FessDetailPage> {
                             Form(
                               key: _formKey,
                               child: CustomUploadForm(
-                                onUpload: () {},
+                                onUpload: _sendReply,
                                 controller: _commentController,
                                 isComment: true,
                               ),

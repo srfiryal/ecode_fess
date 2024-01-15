@@ -58,7 +58,6 @@ class _HomePageState extends State<HomePage> {
         await _menfessRepository.addMenfess(body: body);
 
         SharedCode.showSnackBar(type: Constants.snackBarSuccess, context: context, message: AppLocalizations.of(context).fessSent);
-        AutoRouter.of(context).pop();
       } catch (e, trace) {
         Constants.logger.e(e.toString(), stackTrace: trace);
         SharedCode.showSnackBar(type: Constants.snackBarDanger, context: context, message: e.toString());
