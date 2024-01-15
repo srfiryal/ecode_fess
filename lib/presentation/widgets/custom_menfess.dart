@@ -44,7 +44,7 @@ class _CustomMenfessState extends State<CustomMenfess> {
     try {
       await _menfessRepository.deleteComment(id: widget.menfess.id);
 
-      SharedCode.showSnackBar(type: Constants.snackBarSuccess, context: context, message: AppLocalizations.of(context).fessDeleted);
+      SharedCode.showSnackBar(type: Constants.snackBarSuccess, context: context, message: AppLocalizations.of(context).commentDeleted);
     } catch (e, trace) {
       Constants.logger.e(e.toString(), stackTrace: trace);
       SharedCode.showSnackBar(type: Constants.snackBarDanger, context: context, message: e.toString());

@@ -59,6 +59,7 @@ class AppRouter extends _i2.RootStackRouter {
         child: _i1.FessFormPage(
           key: args.key,
           menfessModel: args.menfessModel,
+          isReply: args.isReply,
         ),
         transitionsBuilder: _i2.TransitionsBuilders.fadeIn,
         opaque: true,
@@ -153,12 +154,14 @@ class FessFormRoute extends _i2.PageRouteInfo<FessFormRouteArgs> {
   FessFormRoute({
     _i4.Key? key,
     _i5.MenfessModel? menfessModel,
+    bool isReply = false,
   }) : super(
           FessFormRoute.name,
           path: '/fess-form',
           args: FessFormRouteArgs(
             key: key,
             menfessModel: menfessModel,
+            isReply: isReply,
           ),
         );
 
@@ -169,15 +172,18 @@ class FessFormRouteArgs {
   const FessFormRouteArgs({
     this.key,
     this.menfessModel,
+    this.isReply = false,
   });
 
   final _i4.Key? key;
 
   final _i5.MenfessModel? menfessModel;
 
+  final bool isReply;
+
   @override
   String toString() {
-    return 'FessFormRouteArgs{key: $key, menfessModel: $menfessModel}';
+    return 'FessFormRouteArgs{key: $key, menfessModel: $menfessModel, isReply: $isReply}';
   }
 }
 

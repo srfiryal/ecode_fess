@@ -14,8 +14,9 @@ import '../../../common/shared_code.dart';
 
 class FessFormPage extends StatefulWidget {
   final MenfessModel? menfessModel;
+  final bool isReply;
 
-  const FessFormPage({super.key, this.menfessModel});
+  const FessFormPage({super.key, this.menfessModel, this.isReply = false});
 
   @override
   State<FessFormPage> createState() => _FessFormPageState();
@@ -60,7 +61,26 @@ class _FessFormPageState extends State<FessFormPage> {
 
         await _menfessRepository.updateMenfess(id: widget.menfessModel!.id, body: body);
 
-        SharedCode.showSnackBar(type: Constants.snackBarSuccess, context: context, message: AppLocalizations.of(context).commentSent);
+        SharedCode.showSnackBar(type: Constants.snackBarSuccess, context: context, message: AppLocalizations.of(context).fessEdited);
+      } catch (e, trace) {
+        Constants.logger.e(e.toString(), stackTrace: trace);
+        SharedCode.showSnackBar(type: Constants.snackBarDanger, context: context, message: e.toString());
+      }
+    } else {
+      SharedCode.showSnackBar(type: Constants.snackBarWarning, context: context, message: AppLocalizations.of(context).fessEmpty);
+    }
+    context.loaderOverlay.hide();
+  }
+
+  Future<void> _updateReply() async {
+    if (_formKey.currentState?.validate() ?? true) {
+      context.loaderOverlay.show();
+      try {
+        String body = _bodyController.text;
+
+        await _menfessRepository.updateComment(id: widget.menfessModel!.id, body: body);
+
+        SharedCode.showSnackBar(type: Constants.snackBarSuccess, context: context, message: AppLocalizations.of(context).commentEdited);
       } catch (e, trace) {
         Constants.logger.e(e.toString(), stackTrace: trace);
         SharedCode.showSnackBar(type: Constants.snackBarDanger, context: context, message: e.toString());
@@ -82,7 +102,7 @@ class _FessFormPageState extends State<FessFormPage> {
             Form(
               key: _formKey,
               child: CustomUploadForm(
-                onUpload: widget.menfessModel == null ? _sendFess : _updateFess,
+                onUpload: widget.menfessModel == null ? _sendFess : widget.isReply ? _updateReply : _updateFess,
                 controller: _bodyController,
               ),
             )

@@ -4,6 +4,7 @@ abstract class BaseMenfessRepository {
   Future<void> addMenfess({required String body});
   Future<void> addComment({required int postId, required String body});
   Future<void> updateMenfess({required int id, required String body});
+  Future<void> updateComment({required int id, required String body});
   Future<void> deleteMenfess({required int id});
   Future<void> deleteComment({required int id});
 }
