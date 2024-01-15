@@ -9,11 +9,12 @@ class CustomButton extends StatefulWidget {
       this.onPressed,
       required this.buttonText,
       this.backgroundColor = ColorValues.primary50,
+      this.textColor = ColorValues.white,
       this.isSmall = false})
       : super(key: key);
   final Function()? onPressed;
   final String buttonText;
-  final Color backgroundColor;
+  final Color backgroundColor, textColor;
   final bool isSmall;
 
   @override
@@ -37,7 +38,7 @@ class _CustomButtonState extends State<CustomButton> {
                     width: 1))),
         child: Text(
           widget.buttonText,
-          style: Theme.of(context).textTheme.labelLarge?.copyWith(color: ColorValues.white),
+          style: Theme.of(context).textTheme.labelLarge?.copyWith(color: widget.textColor),
         )
     );
   }

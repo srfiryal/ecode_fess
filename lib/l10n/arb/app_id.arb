@@ -21,8 +21,12 @@
   "sendFess": "Kirim Fess",
   "updateFess": "Ubah Fess",
   "fessSent": "Fess telah terkirim",
+  "fessDeleted": "Fess telah dihapus",
   "fessEmpty": "Fess tidak boleh kosong",
   "internetDisconnected": "Internet-mu terputus!",
   "replies": "Balasan",
-  "repliesList": "Balasan teman kita"
+  "repliesList": "Balasan teman kita",
+  "edit": "Ubah",
+  "delete": "Hapus",
+  "deleteDesc": "Apakah kamu yakin ingin menghapus menfess ini?"
 }

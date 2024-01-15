@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:ecode_fess/presentation/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../l10n/l10n.dart';
@@ -81,7 +82,7 @@ class SharedCode {
           ),
           child: Center(
             child: Icon(
-              type == Constants.snackBarSuccess ? Iconsax.check : Iconsax.info_circle,
+              type == Constants.snackBarSuccess ? Iconsax.tick_circle : Iconsax.info_circle,
               color: ColorValues.white,
               size: 16)
           ),
@@ -109,28 +110,24 @@ class SharedCode {
         String? proceedText,
         Function()? proceedAction}) {
 
-    Widget proceedButton = ElevatedButton(
+    Widget proceedButton = CustomButton(
       onPressed: () {
         Navigator.of(context).pop();
         proceedAction?.call();
       },
-      child: Text(proceedText ?? AppLocalizations.of(context).yes,
-          style: Theme.of(context)
-              .textTheme
-              .bodySmall
-              ?.copyWith(color: Colors.white)),
+      buttonText: AppLocalizations.of(context).yes,
     );
 
-    Widget cancelButton = OutlinedButton(
+    Widget cancelButton = CustomButton(
       onPressed: () => Navigator.of(context).pop(),
-      child: Text(
-        AppLocalizations.of(context).cancel,
-        style: Theme.of(context).textTheme.bodySmall,
-      ),
+      backgroundColor: Colors.transparent,
+      textColor: ColorValues.text50,
+      buttonText: AppLocalizations.of(context).cancel,
     );
 
     AlertDialog alert = AlertDialog(
       title: Text(title, style: Theme.of(context).textTheme.titleMedium),
+      backgroundColor: ColorValues.white,
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,8 +140,8 @@ class SharedCode {
           ),
           Row(
             children: [
-              if (proceedText != null) Expanded(child: cancelButton),
-              if (proceedText != null) const SizedBox(
+              Expanded(child: cancelButton),
+              const SizedBox(
                 width: UiConstants.mdSpacing,
               ),
               Expanded(child: proceedButton),

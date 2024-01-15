@@ -11,7 +11,8 @@ import '../../../common/shared_preferences_service.dart';
 class AuthRepository extends BaseAuthRepository {
   @override
   Future<void> login(String username, String password) async {
-    var res = await NetworkUtil.post(Uri.parse('${Constants.baseUrl}/auth/login'), body: {
+    var res = await NetworkUtil.post(
+        Uri.parse('${Constants.baseUrl}/auth/login'), body: {
       'username': username,
       'password': password
     });
@@ -33,7 +34,6 @@ class AuthRepository extends BaseAuthRepository {
   @override
   Future<void> getUserData() async {
     var res = await NetworkUtil.get(Uri.parse('${Constants.baseUrl}/auth/me'));
-
     if (res.statusCode == 200) {
       UserModel userModel = UserModel.fromJson(jsonDecode(res.body));
       SharedData.userData.value = userModel;

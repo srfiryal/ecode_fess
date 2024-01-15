@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecode_fess/application/blocs/auth/auth_bloc.dart';
 import 'package:ecode_fess/application/blocs/menfess/menfess_bloc.dart';
-import 'package:ecode_fess/application/repositories/auth/auth_repository.dart';
 import 'package:ecode_fess/common/constants.dart';
 import 'package:ecode_fess/data/models/menfess/menfess_model.dart';
 import 'package:ecode_fess/l10n/l10n.dart';
@@ -45,6 +44,8 @@ class _HomePageState extends State<HomePage> {
       _refreshPage();
     });
 
+    _authBloc.add(const GetUserDataEvent());
+
     super.initState();
   }
 
@@ -78,29 +79,38 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _authBloc..add(const GetUserDataEvent()),
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            AutoRouter.of(context).push(FessFormRoute());
-          },
-          backgroundColor: ColorValues.primary30,
-          elevation: 1,
-          child: const Icon(Iconsax.message_edit5, color: ColorValues.white),
-        ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              Skeletonizer(
-              enabled: SharedData.userData.value == null,
-                child: CustomAppBar(
-                  title: AppLocalizations.of(context).eCodeFess,
-                  isHome: true,
-                  onSearchTap: () {},
-                ),
-              ),
-              Expanded(
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          AutoRouter.of(context).push(FessFormRoute());
+        },
+        backgroundColor: ColorValues.primary30,
+        elevation: 1,
+        child: const Icon(Iconsax.message_edit5, color: ColorValues.white),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            BlocBuilder(
+              bloc: _authBloc,
+              builder: (context, state) {
+                if (state is AuthError) {
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
+                    SharedCode.showSnackBar(type: Constants.snackBarDanger, context: context, message: state.error);
+                  });
+                }
+
+                return Skeletonizer(
+                  enabled: SharedData.userData.value == null,
+                  child: CustomAppBar(
+                    title: AppLocalizations.of(context).eCodeFess,
+                    isHome: true,
+                    onSearchTap: () {},
+                  ),
+                );
+              },
+            ),
+            Expanded(
                 child: RefreshIndicator(
                   onRefresh: _refreshPage,
                   child: Stack(
@@ -120,25 +130,24 @@ class _HomePageState extends State<HomePage> {
                         physics: const AlwaysScrollableScrollPhysics(),
                         padding: const EdgeInsets.symmetric(vertical: UiConstants.smPadding),
                         child: Column(
-                          children: [
-                            Form(
-                              key: _formKey,
-                              child: CustomUploadForm(
-                                controller: _uploadController,
-                                onUpload: _sendFess,
+                            children: [
+                              Form(
+                                key: _formKey,
+                                child: CustomUploadForm(
+                                  controller: _uploadController,
+                                  onUpload: _sendFess,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: UiConstants.smSpacing),
-                            _buildMenfessList(),
-                          ]
+                              const SizedBox(height: UiConstants.smSpacing),
+                              _buildMenfessList(),
+                            ]
                         ),
                       ),
                     ],
                   ),
                 )
-              )
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
