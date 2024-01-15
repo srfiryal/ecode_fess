@@ -76,4 +76,13 @@ class MenfessRepository extends BaseMenfessRepository {
       throw jsonDecode(res.body)['message'];
     }
   }
+
+  @override
+  Future<void> deleteComment({required int id}) async {
+    var res = await NetworkUtil.delete(Uri.parse('${Constants.baseUrl}/comments/$id'));
+
+    if (res.statusCode != 200) {
+      throw jsonDecode(res.body)['message'];
+    }
+  }
 }

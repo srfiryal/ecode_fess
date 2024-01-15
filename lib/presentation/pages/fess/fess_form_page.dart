@@ -60,7 +60,7 @@ class _FessFormPageState extends State<FessFormPage> {
 
         await _menfessRepository.updateMenfess(id: widget.menfessModel!.id, body: body);
 
-        SharedCode.showSnackBar(type: Constants.snackBarSuccess, context: context, message: AppLocalizations.of(context).fessSent);
+        SharedCode.showSnackBar(type: Constants.snackBarSuccess, context: context, message: AppLocalizations.of(context).commentSent);
       } catch (e, trace) {
         Constants.logger.e(e.toString(), stackTrace: trace);
         SharedCode.showSnackBar(type: Constants.snackBarDanger, context: context, message: e.toString());

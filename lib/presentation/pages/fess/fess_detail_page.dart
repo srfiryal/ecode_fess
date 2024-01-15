@@ -122,7 +122,7 @@ class _FessDetailPageState extends State<FessDetailPage> {
                                 style: Theme.of(context).textTheme.labelLarge,
                               )
                             ),
-                            _buildCommentList(),
+                            _buildReplyList(),
                           ]
                         )
                       ),
@@ -136,7 +136,7 @@ class _FessDetailPageState extends State<FessDetailPage> {
     );
   }
 
-  Widget _buildCommentList() {
+  Widget _buildReplyList() {
     return BlocBuilder<MenfessBloc, MenfessState>(
       bloc: _menfessBloc,
       builder: (context, state) {
@@ -166,6 +166,7 @@ class _FessDetailPageState extends State<FessDetailPage> {
                   return CustomMenfess(
                     menfess: _list![index],
                     isClickable: false,
+                    isReply: true,
                   );
                 },
               ),

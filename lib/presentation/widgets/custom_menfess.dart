@@ -15,9 +15,9 @@ import '../core/ui_constants.dart';
 
 class CustomMenfess extends StatefulWidget {
   final MenfessModel menfess;
-  final bool isClickable;
+  final bool isClickable, isReply;
 
-  const CustomMenfess({super.key, required this.menfess, this.isClickable = true});
+  const CustomMenfess({super.key, required this.menfess, this.isClickable = true, this.isReply = false});
 
   @override
   State<CustomMenfess> createState() => _CustomMenfessState();
@@ -30,6 +30,19 @@ class _CustomMenfessState extends State<CustomMenfess> {
     context.loaderOverlay.show();
     try {
       await _menfessRepository.deleteMenfess(id: widget.menfess.id);
+
+      SharedCode.showSnackBar(type: Constants.snackBarSuccess, context: context, message: AppLocalizations.of(context).fessDeleted);
+    } catch (e, trace) {
+      Constants.logger.e(e.toString(), stackTrace: trace);
+      SharedCode.showSnackBar(type: Constants.snackBarDanger, context: context, message: e.toString());
+    }
+    context.loaderOverlay.hide();
+  }
+
+  Future<void> _deleteReply() async {
+    context.loaderOverlay.show();
+    try {
+      await _menfessRepository.deleteComment(id: widget.menfess.id);
 
       SharedCode.showSnackBar(type: Constants.snackBarSuccess, context: context, message: AppLocalizations.of(context).fessDeleted);
     } catch (e, trace) {
@@ -106,7 +119,7 @@ class _CustomMenfessState extends State<CustomMenfess> {
                         context: context,
                         title: AppLocalizations.of(context).delete,
                         description: AppLocalizations.of(context).deleteDesc,
-                        proceedAction: _deleteFess,
+                        proceedAction: widget.isReply ? _deleteReply : _deleteFess,
                       );
                     },
                     child: Text(AppLocalizations.of(context).delete, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: ColorValues.danger50)),
