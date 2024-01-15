@@ -58,7 +58,7 @@ class _FessDetailPageState extends State<FessDetailPage> {
       try {
         String body = _commentController.text;
 
-        await _menfessRepository.addMenfess(body: body);
+        await _menfessRepository.addComment(postId: widget.menfessModel.id, body: body);
 
         SharedCode.showSnackBar(type: Constants.snackBarSuccess, context: context, message: AppLocalizations.of(context).commentSent);
       } catch (e, trace) {

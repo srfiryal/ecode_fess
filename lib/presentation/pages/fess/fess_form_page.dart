@@ -52,6 +52,25 @@ class _FessFormPageState extends State<FessFormPage> {
     context.loaderOverlay.hide();
   }
 
+  Future<void> _updateFess() async {
+    if (_formKey.currentState?.validate() ?? true) {
+      context.loaderOverlay.show();
+      try {
+        String body = _bodyController.text;
+
+        await _menfessRepository.updateMenfess(id: widget.menfessModel!.id, body: body);
+
+        SharedCode.showSnackBar(type: Constants.snackBarSuccess, context: context, message: AppLocalizations.of(context).fessSent);
+      } catch (e, trace) {
+        Constants.logger.e(e.toString(), stackTrace: trace);
+        SharedCode.showSnackBar(type: Constants.snackBarDanger, context: context, message: e.toString());
+      }
+    } else {
+      SharedCode.showSnackBar(type: Constants.snackBarWarning, context: context, message: AppLocalizations.of(context).fessEmpty);
+    }
+    context.loaderOverlay.hide();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +82,7 @@ class _FessFormPageState extends State<FessFormPage> {
             Form(
               key: _formKey,
               child: CustomUploadForm(
-                onUpload: _sendFess,
+                onUpload: widget.menfessModel == null ? _sendFess : _updateFess,
                 controller: _bodyController,
               ),
             )

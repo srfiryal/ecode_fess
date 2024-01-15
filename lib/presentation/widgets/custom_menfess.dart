@@ -93,7 +93,9 @@ class _CustomMenfessState extends State<CustomMenfess> {
                 itemBuilder: (context) {
                   PopupMenuItem edit = PopupMenuItem(
                     height: 32,
-                    onTap: () {},
+                    onTap: () {
+                      AutoRouter.of(context).navigate(FessFormRoute(menfessModel: widget.menfess));
+                    },
                     child: Text(AppLocalizations.of(context).edit, style: Theme.of(context).textTheme.bodySmall),
                   );
 
