@@ -33,6 +33,10 @@ import '../pages/screens.dart';
         page: FessFormPage,
         path: '/fess-form',
         transitionsBuilder: TransitionsBuilders.fadeIn),
+    CustomRoute(
+        page: FessDetailPage,
+        path: '/fess-detail',
+        transitionsBuilder: TransitionsBuilders.fadeIn),
   ],
 )
 class $AppRouter {}

@@ -21,19 +21,12 @@ class MenfessRepository extends BaseMenfessRepository {
   }
 
   @override
-  Future<List<MenfessModel>> getComments({required int postId, int? skip}) async {
+  Future<dynamic> getComments({required int postId, int? skip}) async {
     skip ??= 0;
     var res = await NetworkUtil.get(Uri.parse('${Constants.baseUrl}/comments?limit=10&skip=$skip&select=user,body,reactions'));
 
     if (res.statusCode == 200) {
-      List<MenfessModel> comments = [];
-      List<dynamic> data = jsonDecode(res.body)['comments'];
-
-      for (var element in data) {
-        element['userId'] = element['user']['id'];
-        comments.add(MenfessModel.fromJson(element));
-      }
-      return comments;
+      return jsonDecode(res.body);
     } else {
       throw jsonDecode(res.body)['message'];
     }

@@ -65,6 +65,19 @@ class AppRouter extends _i2.RootStackRouter {
         barrierDismissible: false,
       );
     },
+    FessDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<FessDetailRouteArgs>();
+      return _i2.CustomPage<dynamic>(
+        routeData: routeData,
+        child: _i1.FessDetailPage(
+          key: args.key,
+          menfessModel: args.menfessModel,
+        ),
+        transitionsBuilder: _i2.TransitionsBuilders.fadeIn,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
   };
 
   @override
@@ -90,6 +103,10 @@ class AppRouter extends _i2.RootStackRouter {
         _i2.RouteConfig(
           FessFormRoute.name,
           path: '/fess-form',
+        ),
+        _i2.RouteConfig(
+          FessDetailRoute.name,
+          path: '/fess-detail',
         ),
       ];
 }
@@ -161,5 +178,39 @@ class FessFormRouteArgs {
   @override
   String toString() {
     return 'FessFormRouteArgs{key: $key, menfessModel: $menfessModel}';
+  }
+}
+
+/// generated route for
+/// [_i1.FessDetailPage]
+class FessDetailRoute extends _i2.PageRouteInfo<FessDetailRouteArgs> {
+  FessDetailRoute({
+    _i4.Key? key,
+    required _i5.MenfessModel menfessModel,
+  }) : super(
+          FessDetailRoute.name,
+          path: '/fess-detail',
+          args: FessDetailRouteArgs(
+            key: key,
+            menfessModel: menfessModel,
+          ),
+        );
+
+  static const String name = 'FessDetailRoute';
+}
+
+class FessDetailRouteArgs {
+  const FessDetailRouteArgs({
+    this.key,
+    required this.menfessModel,
+  });
+
+  final _i4.Key? key;
+
+  final _i5.MenfessModel menfessModel;
+
+  @override
+  String toString() {
+    return 'FessDetailRouteArgs{key: $key, menfessModel: $menfessModel}';
   }
 }

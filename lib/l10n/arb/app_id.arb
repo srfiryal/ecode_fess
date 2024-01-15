@@ -22,5 +22,7 @@
   "updateFess": "Ubah Fess",
   "fessSent": "Fess telah terkirim",
   "fessEmpty": "Fess tidak boleh kosong",
-  "internetDisconnected": "Internet-mu terputus!"
+  "internetDisconnected": "Internet-mu terputus!",
+  "replies": "Balasan",
+  "repliesList": "Balasan teman kita"
 }

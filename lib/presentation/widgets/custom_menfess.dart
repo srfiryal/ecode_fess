@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:ecode_fess/presentation/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -8,9 +10,9 @@ import '../core/ui_constants.dart';
 
 class CustomMenfess extends StatefulWidget {
   final MenfessModel menfess;
-  final bool isDetail;
+  final bool isClickable;
 
-  const CustomMenfess({super.key, required this.menfess, this.isDetail = false});
+  const CustomMenfess({super.key, required this.menfess, this.isClickable = true});
 
   @override
   State<CustomMenfess> createState() => _CustomMenfessState();
@@ -21,8 +23,8 @@ class _CustomMenfessState extends State<CustomMenfess> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (!widget.isDetail) {
-          // AutoRouter.of(context).push(MenfessDetailRoute(menfess: widget.menfess));
+        if (widget.isClickable) {
+          AutoRouter.of(context).push(FessDetailRoute(menfessModel: widget.menfess));
         }
       },
       child: Container(
